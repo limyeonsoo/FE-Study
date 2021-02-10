@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import {createStore} from 'redux';
 
 const inputBox = document.getElementById('inputBox');
 const btn = document.getElementById('submitBtn');
 const ul = document.getElementById('ul');
+=======
+import createStore from 'redux';
+
+const inputBox = document.getElementById('inputBox');
+const btn = document.getElementById('submitBtn');
+const body = document.getElementById('body');
+>>>>>>> 03a629cd2847c0bed8db00176b1516fa4e5bc0d7
 
 const ADD_TODO = "ADD";
 const DEL_TODO = "DEL";
@@ -10,6 +18,7 @@ const DEL_TODO = "DEL";
 const reducer = (state=[], action) => {
     switch(action.type){
         case ADD_TODO:
+<<<<<<< HEAD
             //renderToDo();
             //return [...state, {text:action.text, id: Date.now()}];
             return [{text:action.text, id: Date.now()}, ...state];
@@ -17,12 +26,19 @@ const reducer = (state=[], action) => {
             return state.filter(toDo => toDo.id !== action.id);
         default:
             return state;
+=======
+            break;
+
+        case DEL_TODO:
+            break;
+>>>>>>> 03a629cd2847c0bed8db00176b1516fa4e5bc0d7
     }
     return;
 }
 
 const store = createStore(reducer);
 
+<<<<<<< HEAD
 store.subscribe(()=>{console.log(store.getState())});
 store.subscribe(() => {renderToDo()});
 
@@ -62,6 +78,20 @@ const enterKeyEvt = (event) =>{
         const text = inputBox.value;
         resetInput()
         addToDo(text);
+=======
+const clickEvt = (event) => {
+    let toDoItem = document.createElement('li');
+    const text = inputBox.value;
+    toDoItem.textContent = text;
+    body.appendChild(toDoItem);
+    inputBox.value = "";
+
+    store.dispatch({type:ADD_TODO, text: toDo});
+}
+const enterKeyEvt = (event) =>{
+    if(event.keyCode == 13){
+        addToDo(event);
+>>>>>>> 03a629cd2847c0bed8db00176b1516fa4e5bc0d7
     }
 }
 inputBox.addEventListener('keypress', enterKeyEvt);
