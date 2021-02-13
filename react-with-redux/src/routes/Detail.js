@@ -1,23 +1,23 @@
 import React, {useState} from 'react';
+import { connect } from 'react-redux';
+import {useParams} from 'react-router-dom';
 
-function Detail(){
-    const [text, setText] = useState("");
-    function onChange(e){
-        setText(e.target.value);
-    }
-    function onSubmit(e){
-        e.preventDefault();
-        setText("");
-    }
-    return(
-        <>
-            <h1>To Do</h1>
-            <form onSubmit={onSubmit}>
-                <input type="text" value={text} onChange={onChange}/>
-            </form>
-            <ul></ul>
-        </>
-    )
+function Detail(props){
+    return<>
+        <h1>{props.toDos.text}</h1>;
+        <h4>{props.toDos.id}</h4>
+    </>
 }
 
-export default Detail;
+function mapStateToProps(state, ownProps){
+    console.log(state);
+    console.log(ownProps);
+    const {
+        match: {
+            params:{id}
+        }
+    } = ownProps;
+    return {toDos:state.find(todo=>todo.id === parseInt(id))};
+}
+
+export default connect(mapStateToProps)(Detail);
