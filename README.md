@@ -1,4 +1,5 @@
 # Redux
+(https://www.notion.so/Redux-e372b16a6d4047d19f40c9d7420fa365)
 
 Redux X
 
