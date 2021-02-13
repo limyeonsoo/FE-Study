@@ -6,9 +6,8 @@ import {Link} from 'react-router-dom';
 function ToDo(props){
     return(
         <li>
-            <Link to={`/${props.id}`}>
-            {props.text}<button onClick={props.onBtnClick}>DEL</button>
-            </Link>
+            <Link to={`/${props.id}`}>{props.text}</Link>
+            <button onClick={props.onBtnClick}>DEL</button>
         </li>
     )
 }
