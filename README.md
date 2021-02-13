@@ -1,12 +1,4 @@
 # Redux
-Redux Study
-
-Redux는 React로만 사용할 수 있는게 아니다!
-
-vanilla JS를 이용하여 Redux를 사용해보자.
-
-
-# Redux
 
 Redux X
 
@@ -212,3 +204,64 @@ btn.addEventListener('click', addToDo);
         });
     }
     ```
+
+# 모든 Component에서 data 접근 하기 ⇒ (목적)
+
+# Provider
+
+하나의 component인데, 하위 component들이 Provider component를 이용해 redux store에 접근이 가능해진다.
+
+```jsx
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>, 
+    document.getElementById('root')
+);
+```
+
+# Connect
+
+[Connect | React Redux](https://react-redux.js.org/api/connect)
+
+1. `mapStateToProps?: Function`
+2. `mapDispatchToProps?: Function | Object`
+3. `mergeProps?: Function`
+4. `options?: Object`
+
+**state : redux store의 state
+ownProps : 현재 component의 부모에서 전달된 props**
+
+## `mapStateToProps`
+
+- store가 업데이트 될때마다 이 함수가 호출된다.
+- 하지 않으려면, null, or undefined를 전달해주면 된다.
+- parameter 2개 (state, ownProps) 를 이용해서 현재 component에서 store에 접근 할 수 있도록 도와준다.
+
+    ```jsx
+    function mapStateToProps(state, ownProps){
+        return {toDos:state};
+    }
+
+    export default connect(mapStateToProps, mapDispatchToProps)(Home);
+    ```
+
+## `mapDispatchToProps`
+
+- component에 기본적으로 전달할 dispatch를 명시할 수 있다.
+- parameter 2개 (dispatch, ownProps) 를 이용해서 현재 compoenent에서 dispatch를 사용할 수 있도록 도와준다.
+
+    ```jsx
+    function mapDispatchToProps(dispatch, ownProps){
+        return{
+            addToDo : text => dispatch(actionCreators.addToDo(text))
+        }
+    }
+
+    export default connect(mapStateToProps, mapDispatchToProps)(Home);
+    ```
+
+## `mergeProps`
+
+- 최종적으로 어떻게 wrap 할건지 결정하기 위해서 사용한다.
+- mergeProps를 사용하지 않으면 기본적으로 `{ ...ownProps, ...stateProps, ...dispatchProps }`가 된다.
