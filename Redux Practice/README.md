@@ -265,3 +265,120 @@ ownProps : 현재 component의 부모에서 전달된 props**
 
 - 최종적으로 어떻게 wrap 할건지 결정하기 위해서 사용한다.
 - mergeProps를 사용하지 않으면 기본적으로 `{ ...ownProps, ...stateProps, ...dispatchProps }`가 된다.
+
+# Redux Tool-kit
+
+[Redux Toolkit | Redux Toolkit](https://redux-toolkit.js.org/)
+
+- **코드의 길이를 상당히 줄일 수 있음.**
+- **기존의 새로운 상태를 반환해야 하는 단점에서 변형 된(mutation) 상태도 반환 가능함.**
+
+## configureStore
+
+store을 setup함에 있어 default가 되는 함수
+
+```jsx
+const store = createStore(reducer);
+... => 
+const store = configureStore({ reducer });
+```
+
+## createReducer
+
+```jsx
+const ADD = "ADD";
+const DEL = "DEL";
+
+const reducer = (state = [], action) => {
+    switch(action.type){
+        case ADD:
+            return [{text : action.text, id : Date.now() }, ...state];
+        case DEL:
+            return state.filter(toDo => toDo.id !== action.id);
+        default:
+            return state;
+    }
+};
+```
+
+- 무조건 mutation되지 않은 새로운 state를 반환 해야함.
+
+```jsx
+const reducer = createReducer([], {
+  
+[addToDo]: (state, action) => {
+    **state.push**({ text: action.payload, id: Date.now() });
+  },
+  
+[deleteToDo]: (state, action) =>
+    state.filter(toDo => toDo.id !== action.payload)
+
+});
+```
+
+- immer기반으로 mutate한 state도 바로 사용할 수 있음.
+
+## createAction
+
+![Redux%202ef17f9382c0490d927b9e4cc1793e15/Untitled%201.png](Redux%202ef17f9382c0490d927b9e4cc1793e15/Untitled%201.png)
+
+```jsx
+const addToDo = (text) => {
+    return {
+        type: ADD,
+        text
+    }
+}
+const delToDo = (id) => {
+    return {
+        type: DEL,
+        id : parseInt(id)
+    }
+}
+
+export const actionCreators = {
+    addToDo,
+    delToDo
+};
+```
+
+- action의 type에 따라 reducer의 return값을 정하기 위한 type을 변수로 처리.
+
+    - 문자열로 사용한다면 오타에 취약함.
+
+```jsx
+const addToDo = createAction("ADD");
+const deleteToDo = createAction("DELETE");
+
+const reducer = (state = [], action) => {
+  
+	switch (action.type) {
+			
+			case addToDo.type:
+			  return [{ text: action.payload, id: Date.now() }, ...state];
+			
+			case deleteToDo.type:
+			  return state.filter(toDo => toDo.id !== action.payload);
+	
+	}
+}
+```
+
+- createAction으로 생성된 action에는 type이 존재하므로 바로 사용할 수 있음.
+- createAction의 payload로 data를 접근 할 수 있음.
+
+## createSlice
+
+- 내부적으로 createAction, createReducer를 모두 사용하는 하나의 API
+
+```jsx
+function createSlice({
+    // A name, used in action types
+    name: string,
+    // The initial state for the reducer
+    initialState: any,
+    // An object of "case reducers". Key names will be used to generate actions.
+    reducers: Object<string, ReducerFunction | ReducerAndPrepareObject>
+    
+})
+```
