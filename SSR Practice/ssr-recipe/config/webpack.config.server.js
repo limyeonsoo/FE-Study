@@ -61,17 +61,23 @@ module.exports = {
                         //  exportOnlyLocals: true 옵션을 설정해야 실제 CSS 파일을 생성하지 않습니다.
                         loader: require.resolve('css-loader'),
                         options: {
-                            exportOnlyLocals: true
+                            importLoaders: 1,
+                            modules:{
+                                exportOnlyLocals: true
+                            }
                         }
                     },
+
                     // CSS Module을 위한 처리
                     {
                         test: cssModuleRegex,
                         loader: require.resolve('css-loader'),
                         options: {
-                            modules: true,
-                            exportOnlyLocals: true,
-                            getLocalIdent: getCSSModuleLocalIdent
+                            importLoaders: 1,
+                            modules: {
+                                exportOnlyLocals: true,
+                                getLocalIdent: getCSSModuleLocalIdent
+                            }
                         }
                     },
                     // Sass를 위한 처리
@@ -82,7 +88,10 @@ module.exports = {
                             {
                                 loader: require.resolve('css-loader'),
                                 options: {
-                                    exportOnlyLocals: true
+                                    importLoaders:3,
+                                    modules:{
+                                        exportOnlyLocals: true,
+                                    }
                                 }
                             },
                             require.resolve('sass-loader')
@@ -96,9 +105,11 @@ module.exports = {
                             {
                                 loader: require.resolve('css-loader'),
                                 options: {
-                                    modules: true,
-                                    exportOnlyLocals: true,
-                                    getLocalIdent: getCSSModuleLocalIdent
+                                    importLoaders:3,
+                                    modules:{
+                                        exportOnlyLocals: true,
+                                        getLocalIdent: getCSSModuleLocalIdent
+                                    }
                                 }
                             },
                             require.resolve('sass-loader')
