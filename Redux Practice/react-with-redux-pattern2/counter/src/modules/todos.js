@@ -7,7 +7,7 @@ const REMOVE = 'todos/REMOVE';
 
 // 2. Action 생성 함수 정의.
 // parameter를 필드에 추가하는 것 추가.
-export const changeIput = input => ({
+export const changeInput = input => ({
     type: CHANGE_INPUT,
     input
 })
@@ -60,7 +60,7 @@ function todos(state = initialState, action){
         case INSERT:
             return{
                 ...state,
-                todo:state.todos.concat(action.todo)
+                todos:state.todos.concat(action.todo)
             }
         case TOGGLE:
             return{
