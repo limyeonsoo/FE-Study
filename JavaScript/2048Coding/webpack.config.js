@@ -6,6 +6,9 @@ module.exports = {
     mode: 'development',
     devServer: {
         contentBase: './dist',
+        disableHostCheck: true,
+        host: '0.0.0.0',
+        port: 80,
     },
     entry: {
         index: './index.js',

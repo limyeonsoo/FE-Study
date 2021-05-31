@@ -3,6 +3,7 @@ import './index.css'
 //const theme = require('./index.css')
 const $table = document.getElementById('table')
 const $data = []
+const score = document.getElementById('score')
 /*
     1. table을 만들어준다.
 */
@@ -52,6 +53,7 @@ function batchPuzzle() {
     $data[randomCoord[1]][randomCoord[0]] = 2
 }
 window.addEventListener('keyup', (e) => {
+    score.innerText = parseInt(score.innerText) + 1
     if (e.key === 'ArrowRight') {
         move(0)
     } else if (e.key === 'ArrowDown') {
@@ -60,6 +62,8 @@ window.addEventListener('keyup', (e) => {
         move(2)
     } else if (e.key === 'ArrowUp') {
         move(3)
+    } else {
+        score.innerText = parseInt(score.innerText) - 1
     }
 })
 
@@ -172,7 +176,7 @@ function move(direction) {
                         k += 2
                     } else {
                         moved.push(pre)
-                        if (k === 0) {
+                        if (k === 3) {
                             moved.push(cur)
                             break
                         }
@@ -213,7 +217,7 @@ function move(direction) {
                         k += 2
                     } else {
                         moved.push(pre)
-                        if (k === 0) {
+                        if (k === 3) {
                             moved.push(cur)
                             break
                         }
@@ -231,10 +235,18 @@ function move(direction) {
             break
     }
 
-    batchPuzzle()
-    batchPuzzle()
-
-    draw()
+    if ($data.flat().includes(2048)) {
+        draw()
+        setTimeout(() => {
+            alert('승리')
+        }, 0)
+    } else if (!$data.flat().includes(0)) {
+        alert('패배')
+    } else {
+        batchPuzzle()
+        batchPuzzle()
+        draw()
+    }
 }
 
 initTable()
