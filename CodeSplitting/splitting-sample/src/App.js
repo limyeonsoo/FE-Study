@@ -11,11 +11,14 @@ function App(){
   const onClick = () => {
     setVisible(true);
   }
+  const onMouseOver = () => {
+    SplitMe.preload();
+  };
   return(
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p onClick={onClick}> Hello React! </p>
+        <p onClick={onClick} onMouseOver={onMouseOver}> Hello React! </p>
             {visible && <SplitMe />}
       </header>
     </div>
