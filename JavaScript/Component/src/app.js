@@ -1,4 +1,4 @@
-import Items from "./components/Items.js";
+import Items from "./components/beforeSplitItem.js";
 
 class App {
   constructor() {

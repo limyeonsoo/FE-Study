@@ -1,17 +1,20 @@
 export default class Component {
     $target;
+    $props; // 부모 -> 자식  (상태 | 메소드) 전달.
     $state;
     constructor ($target) {
       this.$target = $target;
+      this.$props = $props;
       this.setup();
       this.setEvent();
       this.render();
     }
     setup () {};
+    mounted () {}; // render이후 추가적 기능 수행.
     template () { return ''; }
     render () {
       this.$target.innerHTML = this.template();
-      
+      this.mounted();
     }
     setEvent () {}
     setState (newState) {
