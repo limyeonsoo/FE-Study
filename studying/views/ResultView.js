@@ -2,7 +2,7 @@ import View from './View.js';
 import {on, qs} from '../helper.js';
 import Template from '../Template.js';
 
-class ResultView extends View{
+export default class ResultView extends View{
     constructor(){
         super(qs("#search-result"))
 
@@ -15,4 +15,23 @@ class ResultView extends View{
         super.show();
     }
 }
-export default ResultView;
+
+class Template{
+
+    getEmptyMessage(){
+        return "검색 결과가 없습니다."
+    }
+
+    getList(data = []){
+        return `<ul class="result">${data.map(this._getItem).join('')}</ul`
+    }
+
+    _getItem({name, imageUrl}){
+        return `
+            <li>
+                <img src="${imageUrl}" />
+                <p>${name}</p>
+            </li>
+        `
+    }
+}
