@@ -9,7 +9,8 @@ function main(){
     const store = new Store(storage);
     const views = {
         formView: new FormView(),
-        resultView: new ResultView()
+        resultView: new ResultView(),
+        tabView: new TabView(),
     };
     new Controller(store, views);
 }

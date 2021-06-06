@@ -1,8 +1,9 @@
 import View from './View.js';
 import {on, qs} from '../helper.js';
 
-class FormView extends View{
+export default class FormView extends View{
     constructor(){
+        console.log('form view Constructor');
         super(qs("#form-view"))
         this.inputElement = qs('[type=text]', this.element);
         this.resetElement = qs('[type=reset]', this.element);
@@ -18,6 +19,7 @@ class FormView extends View{
     bindEvents(){
         on(this.inputElement, 'keyup', event => this.handleKeyup(event));
         this.on('submit', event => event.preventDefault());
+        this.on('reset', () => this.handleClickReset());
 
         on(this.resetElement, 'click', _ => this.handleClickReset());
     }
@@ -29,7 +31,7 @@ class FormView extends View{
         const ENTER_CODE = 13
 
         if(value.length === 0){
-            this.emit('@resset');
+            this.emit('@reset');
         }
         else if(event.keyCode === ENTER_CODE){
             this.emit('@submit', { value });
@@ -41,4 +43,3 @@ class FormView extends View{
     }
 
 }
-export default FormView;

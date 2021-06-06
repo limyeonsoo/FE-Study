@@ -1,8 +1,9 @@
 class Controller{
-    constructor(store, { formView, resultView }){
+    constructor(store, { formView, resultView, tabView }){
         this.store = store;
         this.formView = formView;
         this.resultView = resultView;
+        this.tabView = tabView;
         
         this.subscribeViewEvents()
         
@@ -28,8 +29,11 @@ class Controller{
 
     render(){
         if(this.store.searchKeyword.length > 0){
-            return this.resultView.show(this.store.searchResult);
+            this.resultView.show(this.store.searchResult);
+            this.tabView.hide()
+            return
         }
+        this.tabView.show();
         this.resultView.hide();
     }
 }
