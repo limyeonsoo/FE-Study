@@ -4,6 +4,8 @@ import storage from './storage.js';
 import FormView from './views/FormView.js';
 import ResultView from './views/ResultView.js';
 import TabView from './views/TabView.js';
+import KeywordView from './views/KeywordView.js';
+import HistoryView from './views/HistoryView.js';
 
 function main(){
     const store = new Store(storage);
@@ -11,6 +13,8 @@ function main(){
         formView: new FormView(),
         resultView: new ResultView(),
         tabView: new TabView(),
+        keywordView: new KeywordView(),
+        historyView: new HistoryView(),
     };
     new Controller(store, views);
 }

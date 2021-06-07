@@ -1,5 +1,5 @@
 import View from './View.js';
-import {qs, qsAll} from '../helper.js';
+import {qs, qsAll, delegate} from '../helper.js';
 export default class TabView extends View{
     constructor(){
         console.log('tab view Constructor');
@@ -7,6 +7,18 @@ export default class TabView extends View{
         super(qs("#tab-view"))
 
         this.template = new Template();
+        this.bindEvents()
+    }
+
+    bindEvents(){
+        delegate(this.element, 'click', 'li', event => this.handleClick(event));
+    }
+
+    handleClick(event){
+        console.log(event.target);
+        console.log(event.target.dataset);
+        const value = event.target.dataset.tab;
+        this.emit('@change', {value});
     }
 
     show(tab){
@@ -20,7 +32,7 @@ export default class TabView extends View{
     }
 }
 
-const Tab = {
+export const Tab = {
     KEYWORD: "KEYWORD",
     HISTORY: "HISTORY",
 }
@@ -32,7 +44,7 @@ const TabLabel = {
 class Template{
 
     _getTab({key, label}){
-        return `<li data-tab=${key}?>${label}</li>`
+        return `<li data-tab=${key}>${label}</li>`
     }
     getTabList(){
         return`
